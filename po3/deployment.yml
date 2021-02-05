@@ -2,41 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: bungee
+  name: po3
   namespace: minecraft
 
   labels:
-    app: bungee
+    app: po3
 
 spec:
   selector:
     matchLabels:
-      app: bungee
+      app: po3
   template:
     metadata:
       labels:
-        app: bungee
+        app: po3
     spec:
       nodeSelector:
         kubernetes.io/os: linux
         kubernetes.io/arch: amd64
       volumes:
-        - name: bungee
+        - name: po3
           hostPath:
-            path: /media/raid1x2a/kube-storage/minecraft/bungee
+            path: /media/raid1x2a/kube-storage/minecraft/po3
       containers:
-        - name: hexacord
-          image: thinkier/hexacord
+        - name: po3
+          image: thinkier/po3
+          imagePullPolicy: Always
           ports:
             - containerPort: 25565
               protocol: TCP
           volumeMounts:
             - mountPath: /env
-              name: bungee
+              name: po3
           resources:
             requests:
-              cpu: 100m
-              memory: 64Mi
+              cpu: 1500m
+              memory: 4Gi
             limits:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 2000m
+              memory: 8Gi
