@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: bungee
+  namespace: minecraft
+
+  labels:
+    app: bungee
+
+spec:
+  selector:
+    matchLabels:
+      app: bungee
+  template:
+    metadata:
+      labels:
+        app: bungee
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: amd64
+      volumes:
+        - name: bungee
+      containers:
+        - name: hexacord
+          image: thinkier/hexacord
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /env
+              name: bungee
+          livenessProbe:
+            tcpSocket:
+              port: 25565
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
